@@ -1,0 +1,11 @@
+<!-- app_name/templates/login.html -->
+
+{% extends "base.html" %}  <!-- Extend your base template (if you have one) -->
+{% block content %}
+  <h2 class=" site-heading my-4 mt-3 text-white">Login</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Login</button>
+  </form>
+{% endblock %}

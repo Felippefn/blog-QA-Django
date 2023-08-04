@@ -1,0 +1,35 @@
+{% extends 'base.html' %} {% block content %}
+<i action="action" onclick="window.history.go(-1); return false;" class="col-md-5 mb-10 mt-2 left  fa fa-angle-left " style="color: white; font-size:36px; margin-left: 5%; cursor: pointer;"></i>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 card mb-4  mt-3 left  top">
+      <div class="card-body">
+        <h1>{% block title %} {{ object.title }} {% endblock title %}</h1>
+        <p class=" text-muted">{{ object.author }} | {{ object.created_on }}</p>
+        <p class="card-text ">{{ object.content | safe }}</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card my-4">
+              <h5 class="card-header">Know the answer?</h5>
+          <div class="card-body">
+              <p class="card-text">Click the button bellow to answer this question</p>
+              <button onclick="openForm()" class="btn btn-primary">Answer</button>
+          </div>
+      </div>
+    </div>
+    <div class="form-popup" id="myForm">
+      <i id="checkIcon" class="fa fa-check" style="cursor: pointer;color: #04aa6d; opacity:1; text-shadow: 3px 3px 4px rgba(0, 0, 0, 0.71); font-size:25px"></i>
+      <i onclick="closeForm()" class="fa fa-close" style="cursor: pointer; color: #f00000; opacity:1; text-shadow: 3px 3px 4px rgba(0, 0, 0, 0.71); font-size:30px"></i>
+      <form>
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1">Answer</label>
+          <textarea class="form-control" id="formControlTextarea1" rows="6"></textarea>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+{% endblock content %}

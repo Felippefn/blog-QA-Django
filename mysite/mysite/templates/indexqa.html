@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    body {
+        font-family: "Roboto", sans-serif;
+        font-size: 18px;
+    }
+
+    .head_text {
+        color: white;
+    }
+
+</style>
+
+<header class="masthead">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row">
+            <div class=" col-md-8 col-md-10 mx-auto">
+                <div class="site-heading">
+                    <h3 class=" site-heading my-4 mt-3 text-white"> Hello World!</h3>
+                    <p class="text-light">Q&#38;A center &nbsp
+                    </p>
+                    <a href="{% url 'home' %}"><button type="button" class="btn btn-primary">Blog</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mt-3 left">
+            {% for question in question_list %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h2 class="card-title">{{ question.title }}</h2>
+                    <p class="card-text text-muted h6">{{ question.author }} | {{ question.created_on}} </p>
+                    <p class="card-text">{{question.content|slice:":200" }}</p>
+                    {% if question.status == 0 %}
+                    <p class="card-text"><i class="fa fa-close" style="color: #f00000; opacity:1; font-size:15px"></i> Not Solved</p>
+                    {% else %}
+                    <p class="card-text"><i class="fa fa-check" style="color: #04aa6d; opacity:1;  font-size:15px"></i> Solved</p>
+                    {% endif %}
+                    <a href="{% url 'question_detail' question.slug  %}" class="btn btn-primary">Details &rarr;</a>
+            
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% block sidebar %} {% include 'sidebar.html' %} {% endblock sidebar %}
+    </div>
+</div>
+{%endblock%}

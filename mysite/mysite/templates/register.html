@@ -1,0 +1,11 @@
+<!-- app_name/templates/registration/register.html -->
+
+{% extends "base.html" %}  <!-- Extend your base template (if you have one) -->
+{% block content %}
+  <h2 class=" site-heading my-4 mt-3 text-white">Register</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Register</button>
+  </form>
+{% endblock %}
