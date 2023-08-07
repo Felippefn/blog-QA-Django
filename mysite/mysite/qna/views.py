@@ -22,14 +22,18 @@ class QuestionDetail(generic.DetailView):
 
 def create_question(request):
     if request.user.is_authenticated:
-           if request.method == 'POST':
-                form = QuestionForm(request.POST)
-                if form.is_valid():
-                    form.instance.author = request.user.username
-                form.save()
-                return redirect('/questions')
+        if request.method == 'POST':
+            form = QuestionForm(request.POST)
+            if form.is_valid():
+                question = form.save(commit=False)  # Save the form data but don't commit to the database yet
+                question.author = request.user  # Assign the currently authenticated user as the author
+                question.save()
+                return redirect('main')
+        else:
+            form = QuestionForm()
     else:
-         redirect('login')
+        return redirect('login')  # Return the redirect here to perform the redirection
+    return render(request, 'post_question.html', {'form': form})
 
 def post_answer(request, question_slug):
     question = get_object_or_404(Question, slug=question_slug)

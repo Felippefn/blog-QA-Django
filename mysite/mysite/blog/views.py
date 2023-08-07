@@ -29,7 +29,8 @@ def my_profile(request):
     if request.user.is_authenticated:
         return render(request, 'my_profile.html', {'username': request.user.username})
     else:
-        redirect('login')
+        return redirect('login')
+    
 
 def get_contact(request):
 

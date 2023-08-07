@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'user'
 ]
 
-SESSION_COOKIE_AGE = 60
+SESSION_COOKIE_AGE = 300
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
