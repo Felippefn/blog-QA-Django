@@ -25,7 +25,7 @@ Database: SQLite3
 `Question&Answer` (/qna)
 - `questions/` will return all questions made and their authors;
 - `questions/<slug>/` Will return the question detailed to check or answer it;
-- `create`
+- `create-question/` will render a page to create a question and post it in questions
 
 `User` (--)
 - `register/` will render and register user.
