@@ -18,8 +18,6 @@ class Question(models.Model):
     content = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
     status = models.IntegerField(choices=STATUS, default=0)
-    upvotes = models.PositiveIntegerField(default=0)
-    downvotes = models.PositiveIntegerField(default=0)
 
     class Meta:
         ordering = ['-created_on']
@@ -43,13 +41,6 @@ class Question(models.Model):
         else:
             raise PermissionDenied("You do not have permission to change the status of this question.")
     
-    def upvote(self):
-        self.upvotes += 1
-        self.save()
-
-    def downvote(self):
-        self.downvotes += 1
-        self.save()
     
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answers')
@@ -62,8 +53,6 @@ class Answer(models.Model):
     class Meta:
         ordering = ['-posted_on']
     
-    def __str__(self):
-        return self.author
     
     def upvote(self):
         self.upvotes += 1

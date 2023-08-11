@@ -4,10 +4,10 @@
 <i action="action" onclick="window.history.go(-1); return false;" class="col-md-5 mb-10 mt-2 left  fa fa-angle-left " style="color: white; font-size:36px; margin-left: 5%; cursor: pointer;"></i>
 <div class="container">
   <div class="row">
-    <div class="col-md-8 card mb-4  mt-3 left  top">
+    <div class="col-md-8 card mb-4  mt-3 left  top" style="background-color: #5465FF; color: #FFFFFF;">
       <div class="card-body">
         <h1>{% block title %} {{ question.title }} {% endblock title %}</h1>
-        <p class=" text-muted">{{ question.author }} | {{ question.created_on }}</p>
+        <p class="card-text" style="opacity: 0.75;">{{ question.author }} | {{ question.created_on }}</p>
         <p class="card-text" data-question-slug="{{ question.slug }}" >{{ question.content | safe }}</p>
       </div>
     </div>
@@ -59,7 +59,6 @@
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
-              'X-CSRFToken': '{{ csrf_token }}',  // Make sure to include the CSRF token
           },
           body: JSON.stringify(data),
       })
@@ -67,7 +66,8 @@
       .then(data => {
           // Handle the response data here if needed
           console.log(data);
-          location.reload();
+          console.log("accepted, created.")
+          //location.reload();
       })
       .catch(error => {
           // Handle errors here

@@ -25,7 +25,7 @@
       body {
         font-family: "Roboto", sans-serif;
         font-size: 17px;
-        background-color: #454955;
+        background-color: #12100E;
       }
       .shadow {
         box-shadow: 0 4px 2px -2px #59594a;
@@ -59,10 +59,9 @@
 
     <!-- Navigation -->
     <nav
-      class="navbar navbar-expand-lg navbar-light bg-light shadow"
-      id="mainNav"
-    >
-      <div class="container-fluid">
+      class="navbar navbar-expand-lg navbar-light shadow" 
+      id="mainNav" style="background-color: #788BFF;">
+      <div class="container-fluid" style="background-color: #788BFF; color: #FFFFFF;">
         <a class="navbar-brand" href="{% url 'home' %}">Felippefn</a>
         <button
           class="navbar-toggler navbar-toggler-right"
@@ -80,21 +79,21 @@
             <li class="nav-item text-black">
               <a
                 class="nav-link text-black font-weight-bold"
-                href="http://127.0.0.1:8000/about/"
+                href="{% url 'about' %}"
                 >About</a
               >
             </li>
             <li class="nav-item text-black">
               <a
                 class="nav-link text-black font-weight-bold"
-                href="http://127.0.0.1:8000/profile/"
+                href="{% url 'profile' %}"
                 >Profile</a
               >
             </li>
             <li class="nav-item text-black">
               <a
                 class="nav-link text-black font-weight-bold"
-                href="http://127.0.0.1:8000/contact/"
+                href="{% url 'contact' %}"
                 >Contact</a
               >
             </li>
@@ -107,7 +106,7 @@
     {% endblock content %}
     <!-- Footer -->
     <footer class="py-3 bg-grey">
-      <p class="m-0 text-dark text-center">Copyright &copy; Felippefn</p>
+      <p  class="m-0 text-center" style="color: #FFFFFF;">Copyright &copy; Felippefn</p>
     </footer>
   </body>
 </html>

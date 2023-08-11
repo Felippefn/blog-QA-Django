@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'qna',
-    'user'
+    'user',
+    'widget_tweaks'
 ]
 
 SESSION_COOKIE_AGE = 300
@@ -76,10 +77,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
-
+LOGIN_URL = 'login' 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-LOGIN_REDIRECT_URL = 'profile/'
+LOGIN_REDIRECT_URL = 'question_list'  # Use the name of the URL pattern for the question list view
+
 
 DATABASES = {
     'default': {

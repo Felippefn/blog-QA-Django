@@ -53,7 +53,18 @@
       </div>
       {% endfor %}
     </div>
-    {% block sidebar %} {% include 'sidebar.html' %} {% endblock sidebar %}
+    <div class="col-md-4 float-right ">
+      <div class="card my-4">
+              <h5 class="card-header">About This</h5>
+          <div class="card-body">
+              <p class="card-text">Blog with posts created for portifolio and educational purposes</p>
+              <a href="http://felippefn.com"
+                 class="btn btn-danger">Know more!</a>
+                 <a href="{% url 'create_question' %}" class="btn btn-info">Post now</a>
+          </div>
+      </div>
+      </div>
+      
   </div>
 </div>
 {%endblock%}

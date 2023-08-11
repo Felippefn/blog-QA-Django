@@ -6,11 +6,14 @@ from django.views import generic
 from .forms import QuestionForm, AnswerForm
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 class QuestionList(generic.ListView):
     queryset = Question.objects.filter(status=0).order_by('-created_on')
     template_name = 'indexqa.html'
 
+@method_decorator(login_required, name='dispatch')
 class QuestionDetail(generic.DetailView):
     model = Question  # Specify the model for the Question
     template_name = 'question_detail.html'
@@ -40,23 +43,20 @@ def create_question(request):
 @csrf_exempt
 def post_answer(request, question_slug):
     question = get_object_or_404(Question, slug=question_slug)
-    if request.user.is_authenticated:
-        if request.method == 'POST':
+    if request.method == 'POST':
             form = AnswerForm(request.POST)
             if form.is_valid():
                 answer = form.save(commit=False)
                 answer.question = question
-                answer.author = request.user.username
+                answer.author = request.user
                 answer.content = request.POST.get('content')
                 answer.save()
-                return JsonResponse({'message': 'Answer submitted successfully'})
+                return redirect('question_detail', question_slug=question_slug)
             else:
-                return JsonResponse({'errors': form.errors}, status=400)
-        else:
-            # Return a JsonResponse to indicate a bad request method
-            return JsonResponse({'message': 'Invalid request method'}, status=400)
+                form = AnswerForm()
     else:
-        return redirect('login')
+        return JsonResponse({'message': 'Invalid request method'}, status=400)
+
 
 def change_question_status(request, question_slug):
     question = get_object_or_404(Question, slug=question_slug)
