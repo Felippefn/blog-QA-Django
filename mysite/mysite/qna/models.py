@@ -18,8 +18,6 @@ class Question(models.Model):
     content = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
     status = models.IntegerField(choices=STATUS, default=0)
-    upvotes = models.PositiveIntegerField(default=0)
-    downvotes = models.PositiveIntegerField(default=0)
 
     class Meta:
         ordering = ['-created_on']
@@ -43,6 +41,19 @@ class Question(models.Model):
         else:
             raise PermissionDenied("You do not have permission to change the status of this question.")
     
+    
+class Answer(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answers')
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    posted_on = models.DateTimeField(auto_now_add=True)
+    upvotes = models.PositiveIntegerField(default=0)
+    downvotes = models.PositiveIntegerField(default=0)
+    
+    class Meta:
+        ordering = ['-posted_on']
+    
+    
     def upvote(self):
         self.upvotes += 1
         self.save()
@@ -50,13 +61,3 @@ class Question(models.Model):
     def downvote(self):
         self.downvotes += 1
         self.save()
-    
-class Answer(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answers')
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    content = models.TextField()
-    posted_on = models.DateTimeField(auto_now_add=True)
-    
-    class Meta:
-        ordering = ['-posted_on']
-    

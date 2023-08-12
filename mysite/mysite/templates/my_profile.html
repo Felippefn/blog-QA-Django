@@ -1,4 +1,49 @@
-{% extends "base.html" %} 
-{% block content %}
- 
+{% extends "base.html" %} {% block content %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <div class="card my-4">
+        <div class="card-body">
+          <h2 class="card-title">Welcome {{username}}!</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card mb-4">
+  <div class="card-body">
+    <h2 class="card-title">a</h2>
+    <p class="card-text text-muted h6">
+    </p>
+    <p class="card-text">a</p>
+  </div>
+</div>
+<h3 class="text-white">My Questions:</h3>
+  {% if question_list %}
+    <ul>
+      {% for question in question_list %}
+        <li>
+          Question: {{ question.title }} ({{ question.created_on }})
+        </li>
+      {% endfor %}
+    </ul>
+    <p>Total Questions: {{ question_list_length }}</p>
+  {% else %}
+    <p>No questions found.</p>
+  {% endif %}
+
+  <h3 class="text-white">My Posts:</h3>
+  {% if post_list %}
+    <ul>
+      {% for post in post_list %}
+        <li>
+          Post: {{ post.content }} ({{ post.created_on }})
+        </li>
+      {% endfor %}
+    </ul>
+    <p>Total Posts: {{ post_list_length }}</p>
+  {% else %}
+    <p>No posts found.</p>
+  {% endif %}
 {% endblock %}

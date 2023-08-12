@@ -4,16 +4,16 @@
 <i action="action" onclick="window.history.go(-1); return false;" class="col-md-5 mb-10 mt-2 left  fa fa-angle-left " style="color: white; font-size:36px; margin-left: 5%; cursor: pointer;"></i>
 <div class="container">
   <div class="row">
-    <div class="col-md-8 card mb-4  mt-3 left  top">
+    <div class="col-md-8 card mb-4  mt-3 left  top" style="background-color: #5465FF; color: #FFFFFF;">
       <div class="card-body">
-        <h1>{% block title %} {{ object.title }} {% endblock title %}</h1>
-        <p class=" text-muted">{{ object.author }} | {{ object.created_on }}</p>
-        <p class="card-text ">{{ object.content | safe }}</p>
+        <h1>{% block title %} {{ question.title }} {% endblock title %}</h1>
+        <p class="card-text" style="opacity: 0.75;">{{ question.author }} | {{ question.created_on }}</p>
+        <p class="card-text" data-question-slug="{{ question.slug }}" >{{ question.content | safe }}</p>
       </div>
     </div>
     <div class="col-md-4">
       <div class="card my-4">
-              <h5 class="card-header">Know the answer?</h5>
+              <h5 class="card-header">Knows the answer?</h5>
           <div class="card-body">
               <p class="card-text">Click the button bellow to answer this question</p>
               <button onclick="openForm()" class="btn btn-primary">Answer</button>
@@ -21,16 +21,68 @@
       </div>
     </div>
     <div class="form-popup" id="myForm">
-      <i id="checkIcon" class="fa fa-check" style="cursor: pointer;color: #04aa6d; opacity:1; text-shadow: 3px 3px 4px rgba(0, 0, 0, 0.71); font-size:25px"></i>
+      <i id="submit-answer" class="fa fa-check" style="cursor: pointer;color: #04aa6d; opacity:1; text-shadow: 3px 3px 4px rgba(0, 0, 0, 0.71); font-size:25px"></i>
       <i onclick="closeForm()" class="fa fa-close" style="cursor: pointer; color: #f00000; opacity:1; text-shadow: 3px 3px 4px rgba(0, 0, 0, 0.71); font-size:30px"></i>
       <form>
         <div class="form-group">
           <label for="exampleFormControlTextarea1">Answer</label>
-          <textarea class="form-control" id="formControlTextarea1" rows="6"></textarea>
+          <textarea  id="answer-content" class="form-control" rows="6"></textarea>
         </div>
       </form>
     </div>
-
+    {% for answer in answers %}
+    <div class="col-md-8 card mb-4  mt-3 left  top">
+      <div class="card-body">
+        <h3 class="card-title">{{ answer.author }}</h3>
+        <p class=" text-muted">{{answer.posted_on}}</p>
+        <p class="card-text">{{answer.content|slice:":300" }}</p>
+      </div>
+    </div>
+    {% endfor %}
   </div>
 </div>
+
+<script>
+  document.getElementById('submit-answer').addEventListener('click', function() {
+      // Get the user's answer from the textarea
+      var answerContent = document.getElementById('answer-content').value;
+      var questionSlugElement = document.querySelector('[data-question-slug]');
+      var questionSlug = questionSlugElement.getAttribute('data-question-slug');
+      var url = `/qna/${questionSlug}/post-answer/`;
+      // Create a JSON object to send in the request
+      var data = {
+          'content': answerContent
+      };
+  
+      // Make an HTTP POST request to the Django view
+      fetch(url, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+      })
+      .then(response => response.json())
+      .then(data => {
+          // Handle the response data here if needed
+          console.log(data);
+          console.log("accepted, created.")
+          //location.reload();
+      })
+      .catch(error => {
+          // Handle errors here
+          console.error('Error:', error);
+      });
+  });
+
+  function openForm() {
+    document.getElementById("myForm").style.display = "block";
+  }
+
+  function closeForm() {
+    document.getElementById("myForm").style.display = "none";
+  }
+
+  </script>
+  
 {% endblock %}

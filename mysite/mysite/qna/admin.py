@@ -8,3 +8,10 @@ class QuestionAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
 
 admin.site.register(Question, QuestionAdmin)
+
+class AnswerAdmin(admin.ModelAdmin):
+    list_display = ('question', 'author', 'posted_on')
+    list_filter = ("posted_on",)
+    search_fields = ['content']
+
+admin.site.register(Answer, AnswerAdmin)
